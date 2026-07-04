@@ -1,0 +1,16 @@
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/bin/Debug/net8.0/FleetManagementSystem.Application.deps.json
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/bin/Debug/net8.0/FleetManagementSystem.Application.dll
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/bin/Debug/net8.0/FleetManagementSystem.Application.pdb
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/bin/Debug/net8.0/FleetManagementSystem.Domain.dll
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/bin/Debug/net8.0/FleetManagementSystem.Domain.pdb
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/obj/Debug/net8.0/FleetManagementSystem.Application.csproj.AssemblyReference.cache
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/obj/Debug/net8.0/FleetManagementSystem.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/obj/Debug/net8.0/FleetManagementSystem.Application.AssemblyInfoInputs.cache
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/obj/Debug/net8.0/FleetManagementSystem.Application.AssemblyInfo.cs
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/obj/Debug/net8.0/FleetManagementSystem.Application.csproj.CoreCompileInputs.cache
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/obj/Debug/net8.0/FleetManagementSystem.Application.sourcelink.json
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/obj/Debug/net8.0/FleetMan.60F897E8.Up2Date
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/obj/Debug/net8.0/FleetManagementSystem.Application.dll
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/obj/Debug/net8.0/refint/FleetManagementSystem.Application.dll
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/obj/Debug/net8.0/FleetManagementSystem.Application.pdb
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/obj/Debug/net8.0/ref/FleetManagementSystem.Application.dll

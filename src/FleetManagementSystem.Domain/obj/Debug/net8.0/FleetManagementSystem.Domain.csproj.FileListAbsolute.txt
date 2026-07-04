@@ -1,0 +1,13 @@
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/bin/Debug/net8.0/FleetManagementSystem.Domain.deps.json
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/bin/Debug/net8.0/FleetManagementSystem.Domain.dll
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/bin/Debug/net8.0/FleetManagementSystem.Domain.pdb
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/obj/Debug/net8.0/FleetManagementSystem.Domain.csproj.AssemblyReference.cache
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/obj/Debug/net8.0/FleetManagementSystem.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/obj/Debug/net8.0/FleetManagementSystem.Domain.AssemblyInfoInputs.cache
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/obj/Debug/net8.0/FleetManagementSystem.Domain.AssemblyInfo.cs
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/obj/Debug/net8.0/FleetManagementSystem.Domain.csproj.CoreCompileInputs.cache
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/obj/Debug/net8.0/FleetManagementSystem.Domain.sourcelink.json
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/obj/Debug/net8.0/FleetManagementSystem.Domain.dll
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/obj/Debug/net8.0/refint/FleetManagementSystem.Domain.dll
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/obj/Debug/net8.0/FleetManagementSystem.Domain.pdb
+/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/obj/Debug/net8.0/ref/FleetManagementSystem.Domain.dll
