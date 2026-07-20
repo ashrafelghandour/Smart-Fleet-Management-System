@@ -36,7 +36,8 @@ public class CreateVehicleCommandHandler(
             ExpirationDate = request.LicenseExpiryDate
         };
 
-        await unitOfWork.BeginTransactionAsync();
+        await unitOfWork.BeginTransactionAsync(cancellationToken);
+       
         try
         {
             await Task.WhenAll(vehicleRepo.AddAsync(newVehicle),

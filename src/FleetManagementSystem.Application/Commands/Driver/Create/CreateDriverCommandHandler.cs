@@ -4,13 +4,14 @@ using FleetManagementSystem.Application.Interface;
 using FleetManagementSystem.Domain.Entities;
 using FleetManagementSystem.Domain.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 namespace FleetManagementSystem.Application.Commands.Driver.Create;
 
 public class CreateDriverCommandHandler(
     IGenericRepository<Domain.Entities.Driver> driverRepo,
     IGenericRepository<DriverLicense> driverLicenseRepo,
-    IGenericRepository<AppUser> userRepo,
+   UserManager<AppUser> userRepo,
     IUnitOfWork unitOfWork,
     
     IMapper mapper) :
@@ -19,11 +20,11 @@ public class CreateDriverCommandHandler(
 
     public async Task<DriverResponse> Handle(CreateDriverCommand request, CancellationToken cancellationToken)
     {
-        var user = await userRepo.GetByIdAsync(request.UserId);
+        var user = await userRepo.FindByIdAsync(request.UserId.ToString());
         if (user == null)
             throw new Exception("User not found");
 
-        var existingDriver = await driverRepo.ExistsAsync(d => d.UserId == request.UserId);
+        var existingDriver = await driverRepo.ExistsAsync(d => d.Id == request.UserId);
         if (existingDriver)
             throw new Exception("Driver already exists for this user");
 
@@ -52,11 +53,13 @@ public class CreateDriverCommandHandler(
         try
         {
            //wait all Task Completed
-           await Task.WhenAll([driverRepo.AddAsync(driver),
-            driverLicenseRepo.AddAsync(license),
-            unitOfWork.SaveChangesAsync(cancellationToken),
-             unitOfWork.CommitTransactionAsync(cancellationToken)]);
-        
+           driver = await  driverRepo.AddAsync(driver);
+
+           await driverLicenseRepo.AddAsync(license);
+          
+           await unitOfWork.SaveChangesAsync(cancellationToken);
+           await unitOfWork.CommitTransactionAsync(cancellationToken);
+
             return mapper.Map<DriverResponse>(driver);
         }
         catch

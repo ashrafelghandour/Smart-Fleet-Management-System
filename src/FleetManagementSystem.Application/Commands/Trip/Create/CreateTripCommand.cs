@@ -1,5 +1,4 @@
 using FleetManagementSystem.Application.DTOs.Trip;
-using FleetManagementSystem.Domain.Enums;
 using MediatR;
 
 namespace FleetManagementSystem.Application.Commands.Trip.Create;

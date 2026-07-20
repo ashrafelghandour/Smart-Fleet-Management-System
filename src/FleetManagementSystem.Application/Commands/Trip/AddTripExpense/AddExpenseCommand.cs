@@ -1,4 +1,3 @@
-
 using MediatR;
 using FleetManagementSystem.Application.DTOs.Trip;
 using FleetManagementSystem.Domain.Enums;

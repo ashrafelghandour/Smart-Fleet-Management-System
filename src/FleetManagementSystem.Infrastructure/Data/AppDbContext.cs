@@ -1,5 +1,3 @@
-
-
 using FleetManagementSystem.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -8,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FleetManagementSystem.Infrastructure.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) :
- IdentityDbContext<IdentityUser<int>,IdentityRole<int>,int>(options)
+ IdentityDbContext<AppUser,IdentityRole<int>,int>(options)
 {
      public DbSet<Driver> Drivers { get; set; }
     public DbSet<DriverLicense> DriverLicenses { get; set; }

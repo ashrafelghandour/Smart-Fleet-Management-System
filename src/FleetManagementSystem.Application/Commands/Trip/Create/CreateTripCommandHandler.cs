@@ -9,21 +9,14 @@ using MediatR;
 namespace FleetManagementSystem.Application.Commands.Trip.Create;  
 public class CreateTripCommandHandler( IGenericRepository<Domain.Entities.Trip> _tripRepository,
         IGenericRepository<Domain.Entities.Driver> _driverRepository,
-        IGenericRepository<Vehicle> _vehicleRepository,
+        IGenericRepository<Domain.Entities.Vehicle> _vehicleRepository,
         IUnitOfWork _unitOfWork,
-        IMapper _mapper,
-        IValidator<CreateTripCommand> _validator) : IRequestHandler<CreateTripCommand, TripResponse>
+        IMapper _mapper) : IRequestHandler<CreateTripCommand, TripResponse>
 {
   
     public async Task<TripResponse> Handle(CreateTripCommand request, CancellationToken cancellationToken)
     {
-        // 1. Validate
-        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationException(validationResult.Errors);
-        }
-
+       
         // Driver validation
         var driver = await _driverRepository.GetByIdAsync(request.DriverId);
         if (driver == null)

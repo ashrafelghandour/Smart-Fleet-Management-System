@@ -23,7 +23,7 @@ public sealed class CancelTripCommandValidator : AbstractValidator<CancelTripCom
 
 public class CancelTripCommandHandler(IGenericRepository<Domain.Entities.Trip> _tripRepository,
     IGenericRepository<Domain.Entities.Driver> _driverRepository,
-    IGenericRepository<Vehicle> _vehicleRepository,
+    IGenericRepository<Domain.Entities.Vehicle> _vehicleRepository,
     IUnitOfWork _unitOfWork,
     IMapper _mapper) : IRequestHandler<CancelTripCommand, TripResponse>
 {
