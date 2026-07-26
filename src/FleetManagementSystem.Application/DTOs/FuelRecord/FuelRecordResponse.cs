@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace FleetManagementSystem.Application.DTOs.FuelRecord;
 public class FuelRecordResponse {
     public int VehicleId { get; set; }

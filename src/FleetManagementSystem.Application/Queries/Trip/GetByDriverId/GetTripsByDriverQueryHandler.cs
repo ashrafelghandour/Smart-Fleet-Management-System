@@ -1,4 +1,3 @@
-using System.Data;
 using AutoMapper;
 using FleetManagementSystem.Application.DTOs.Trip;
 using FleetManagementSystem.Application.Interface;

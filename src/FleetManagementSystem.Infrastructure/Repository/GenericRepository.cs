@@ -3,7 +3,6 @@ using FleetManagementSystem.Domain.Common;
 using System.Linq.Expressions;
 using FleetManagementSystem.Application.Interface;
 using FleetManagementSystem.Infrastructure.Data;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace FleetManagementSystem.Infrastructure.Repositories;
 

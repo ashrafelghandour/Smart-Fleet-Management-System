@@ -1,5 +1,3 @@
-using AutoMapper;
-using FleetManagementSystem.Application.DTOs.Driver;
 using FleetManagementSystem.Application.Interface;
 using MediatR;
 

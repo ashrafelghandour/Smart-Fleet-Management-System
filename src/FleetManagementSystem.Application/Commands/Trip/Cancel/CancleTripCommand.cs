@@ -1,7 +1,6 @@
 using AutoMapper;
 using FleetManagementSystem.Application.DTOs.Trip;
 using FleetManagementSystem.Application.Interface;
-using FleetManagementSystem.Domain.Entities;
 using FleetManagementSystem.Domain.Enums;
 using FluentValidation;
 using MediatR;

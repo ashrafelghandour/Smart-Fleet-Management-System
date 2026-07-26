@@ -6,7 +6,6 @@ namespace FleetManagementSystem.Domain.Entities;
 public class Driver : BaseEntity
 {
     public int UserId { get; set; }  
-    public int DriverLicenseId {get;set;}
     public string PhoneNumber { get; set; } = string.Empty;
     public int NationalId { get; set; }
     public DriverStatus Status { get; set; } = DriverStatus.Available;

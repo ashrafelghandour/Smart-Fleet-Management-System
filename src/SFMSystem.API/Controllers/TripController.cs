@@ -12,7 +12,6 @@ using FleetManagementSystem.Application.Queries.Trip.GetByDriver;
 
 
 namespace SFMSystem.API.Controllers;
-
 [Authorize]
 public class TripController : BaseApiController
 {

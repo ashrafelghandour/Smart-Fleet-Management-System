@@ -4,14 +4,17 @@ using FleetManagementSystem.Application.Commands.Driver.UpdateStatus;
 using FleetManagementSystem.Application.Queries.Driver.GetAlls;
 using FleetManagementSystem.Application.Queries.Driver.GetAvailable;
 using FleetManagementSystem.Application.Queries.Driver.GetById;
+using FleetManagementSystem.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SFMSystem.API.Controllers;
 
+[Authorize]
 public class DriverController : BaseApiController{
 
     [HttpGet]   
+    [Authorize(Roles = Roles.Admin )]
     public async Task<IActionResult> GetAll()
     {
         try
@@ -23,7 +26,8 @@ public class DriverController : BaseApiController{
         {
            return HandleError(ex);
         }
-
+      
+      
 
     }
     [HttpGet("Available")]
@@ -63,7 +67,7 @@ public class DriverController : BaseApiController{
     public async Task<IActionResult> CreateDriver([FromBody] CreateDriverCommand request )
     {
         try
-        {
+        { 
              var result = Mediator.Send(request);
              return HandleResult(result);
         }
@@ -74,22 +78,25 @@ public class DriverController : BaseApiController{
         
          
     }
-
-    [HttpPut("UpdateStatus")]
-    public async Task<IActionResult> UpdateStatus([FromBody] UpdateDriverStatusCommand request )
+  [HttpPut("{id}/status")]
+    public async Task<IActionResult> UpdateDriverStatus(int id, [FromBody] UpdateDriverStatusRequest request)
     {
         try
         {
-             var result = Mediator.Send(request);
-             return HandleResult(result);
+            var command = new UpdateDriverStatusCommand 
+            { 
+                DriverId = id, 
+                NewStatus = request.Status 
+            };
+            var result = await Mediator.Send(command);
+            return HandleResult(result);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return HandleError(ex);
         }
-        
-         
     }
+
     [HttpDelete]
    public async Task<IActionResult> DeleteDriver([FromBody] DeleteDriverCommand request )
     {
@@ -105,4 +112,9 @@ public class DriverController : BaseApiController{
         
          
     }
+}
+
+public class UpdateDriverStatusRequest
+{
+    public DriverStatus Status { get; set; }
 }

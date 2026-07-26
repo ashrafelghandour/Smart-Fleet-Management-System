@@ -20,15 +20,22 @@ public class CreateDriverCommandHandler(
 
     public async Task<DriverResponse> Handle(CreateDriverCommand request, CancellationToken cancellationToken)
     {
+             // 1. التحقق من وجود المستخدم
         var user = await userRepo.FindByIdAsync(request.UserId.ToString());
         if (user == null)
             throw new Exception("User not found");
 
-        var existingDriver = await driverRepo.ExistsAsync(d => d.Id == request.UserId);
+        // 2. التحقق من وجود السائق برقم الهاتف فقط (أفضل)
+        var existingDriver = await driverRepo.ExistsAsync(d => d.PhoneNumber == request.PhoneNumber);
         if (existingDriver)
-            throw new Exception("Driver already exists for this user");
+            throw new Exception("Driver with this phone number already exists");
 
-        //  Create new Driver
+        // 3. التحقق من وجود رخصة بنفس الرقم (اختياري)
+        var existingLicense = await driverLicenseRepo.ExistsAsync(l => l.LicenseNumber == request.LicenseNumber);
+        if (existingLicense)
+            throw new Exception("License number already exists");
+
+        
         var driver = new Domain.Entities.Driver
         {
             UserId = request.UserId,
@@ -38,27 +45,30 @@ public class CreateDriverCommandHandler(
             HireDate = DateTime.UtcNow
         };
 
-        //  Driver License
+   
         var license = new DriverLicense
         {
-            DriverId = driver.Id,
+            
             LicenseNumber = request.LicenseNumber,
             IssueDate = request.LicenseIssueDate,
             ExpiryDate = request.LicenseExpiryDate,
-            LicenseType = request.LicenseType
+            LicenseType = request.LicenseType,
+            Driver = driver 
         };
+
 
         await unitOfWork.BeginTransactionAsync(cancellationToken);
 
         try
         {
-           //wait all Task Completed
-           driver = await  driverRepo.AddAsync(driver);
-
-           await driverLicenseRepo.AddAsync(license);
-          
-           await unitOfWork.SaveChangesAsync(cancellationToken);
-           await unitOfWork.CommitTransactionAsync(cancellationToken);
+            driver = await driverRepo.AddAsync(driver);
+            
+            license.DriverId = driver.Id; 
+            
+            await driverLicenseRepo.AddAsync(license);
+            
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+            await unitOfWork.CommitTransactionAsync(cancellationToken);
 
             return mapper.Map<DriverResponse>(driver);
         }
@@ -69,3 +79,5 @@ public class CreateDriverCommandHandler(
         }
     }
 }
+    
+ 

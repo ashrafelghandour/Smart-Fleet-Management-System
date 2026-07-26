@@ -1,6 +1,5 @@
 using MediatR;
 using FleetManagementSystem.Application.DTOs.Driver;
-using System.ComponentModel.DataAnnotations;
 
 namespace FleetManagementSystem.Application.Queries.Driver.GetById;
 
