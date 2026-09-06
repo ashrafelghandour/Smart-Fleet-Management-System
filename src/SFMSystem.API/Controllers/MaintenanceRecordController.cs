@@ -1,6 +1,7 @@
 using FleetManagementSystem.Application.Commands.MaintenanceRecord.Add;
 using FleetManagementSystem.Application.Commands.MaintenanceRecord.Update;
 using FleetManagementSystem.Application.Queries.MaintenanceRecord;
+using FleetManagementSystem.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace SFMSystem.API.Controllers;
 public class MaintenanceRecordController : BaseApiController
 {
     [HttpPost]
+    [Authorize(Roles = Roles.Admin + "," + Roles.Driver+ "," + Roles.Manager)]
     public async Task<IActionResult> AddMaintenanceRecord([FromBody] AddMaintenanceRecordCommand command)
     {
         try
@@ -25,6 +27,8 @@ public class MaintenanceRecordController : BaseApiController
     }
 
     [HttpPut("{id}/complete")]
+    [Authorize(Roles = Roles.Admin + "," + Roles.Driver+ "," + Roles.Manager)]
+
     public async Task<IActionResult> CompleteMaintenance(int id)
     {
         try
@@ -40,6 +44,8 @@ public class MaintenanceRecordController : BaseApiController
     }
 
     [HttpGet("vehicle/{vehicleId}")]
+    [Authorize(Roles = Roles.Admin + "," + Roles.Driver+ "," + Roles.Manager)]
+
     public async Task<IActionResult> GetMaintenanceRecordsByVehicle(int vehicleId)
     {
         try

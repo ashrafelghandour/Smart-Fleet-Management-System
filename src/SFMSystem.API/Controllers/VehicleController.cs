@@ -12,8 +12,8 @@ namespace SFMSystem.API.Controllers;
 [Authorize]
 public class VehicleController : BaseApiController
 {
-    // POST: api/vehicle
     [HttpPost]
+    [Authorize(Policy = Permissions.VehiclesCreate)]
     public async Task<IActionResult> CreateVehicle([FromBody] CreateVehicleCommand command)
     {
         try
@@ -28,6 +28,7 @@ public class VehicleController : BaseApiController
     }
 
     [HttpPut("{id}/status")]
+    [Authorize(Policy = Permissions.VehiclesManageStatus)]
     public async Task<IActionResult> UpdateVehicleStatus(int id, [FromBody] UpdateVehicleStatusRequest request)
     {
         try
@@ -48,6 +49,7 @@ public class VehicleController : BaseApiController
 
 
     [HttpGet]
+    [Authorize(Policy = Permissions.VehiclesView)]
     public async Task<IActionResult> GetAllVehicles()
     {
         try
@@ -64,6 +66,7 @@ public class VehicleController : BaseApiController
 
 
     [HttpGet("{id}")]
+    [Authorize(Policy = Permissions.VehiclesView)]
     public async Task<IActionResult> GetVehicleById(int id)
     {
         try
@@ -79,6 +82,7 @@ public class VehicleController : BaseApiController
     }
 
     [HttpGet("available")]
+    [Authorize(Policy = Permissions.VehiclesView)]
     public async Task<IActionResult> GetAvailableVehicles()
     {
         try

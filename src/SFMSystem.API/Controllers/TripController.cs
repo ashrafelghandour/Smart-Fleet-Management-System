@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using FleetManagementSystem.Application.Commands.Trip.Cancel;
 using FleetManagementSystem.Application.Queries.Trip.GetByVehicle;
 using FleetManagementSystem.Application.Queries.Trip.GetByDriver;
+using FleetManagementSystem.Domain.Enums;
 
 
 namespace SFMSystem.API.Controllers;
@@ -16,6 +17,7 @@ namespace SFMSystem.API.Controllers;
 public class TripController : BaseApiController
 {
     [HttpPost]
+    [Authorize(Policy = Permissions.TripsCreate)]
     public async Task<IActionResult> CreateTrip([FromBody] CreateTripCommand command)
     {
         try
@@ -30,6 +32,7 @@ public class TripController : BaseApiController
     }
 
     [HttpPut("{id}/complete")]
+    [Authorize(Policy = Permissions.TripsComplete)]
     public async Task<IActionResult> CompleteTrip(int id)
     {
         try
@@ -45,6 +48,7 @@ public class TripController : BaseApiController
     }
 
     [HttpPut("{id}/cancel")]
+    [Authorize(Policy = Permissions.TripsCancel)]
     public async Task<IActionResult> CancelTrip(int id)
     {
         try
@@ -60,6 +64,7 @@ public class TripController : BaseApiController
     }
 
     [HttpPost("{id}/expense")]
+    [Authorize(Policy = Permissions.TripsEdit)]
     public async Task<IActionResult> AddTripExpense(int id, [FromBody] AddTripExpenseCommand command)
     {
         try
@@ -75,6 +80,7 @@ public class TripController : BaseApiController
     }
 
     [HttpGet]
+    [Authorize(Policy = Permissions.TripsView)]
     public async Task<IActionResult> GetAllTrips()
     {
         try
@@ -90,6 +96,7 @@ public class TripController : BaseApiController
     }
 
     [HttpGet("{id}")]
+    [Authorize(Policy = Permissions.TripsView)]
     public async Task<IActionResult> GetTripById(int id)
     {
         try
@@ -105,6 +112,7 @@ public class TripController : BaseApiController
     }
 
     [HttpGet("active")]
+    [Authorize(Policy = Permissions.TripsView)]
     public async Task<IActionResult> GetActiveTrips()
     {
         try
@@ -120,6 +128,7 @@ public class TripController : BaseApiController
     }
 
     [HttpGet("driver/{driverId}")]
+    [Authorize(Policy = Permissions.TripsView)]
     public async Task<IActionResult> GetTripsByDriver(int driverId)
     {
         try
@@ -135,6 +144,7 @@ public class TripController : BaseApiController
     }
 
     [HttpGet("vehicle/{vehicleId}")]
+    [Authorize(Policy = Permissions.TripsView)]
     public async Task<IActionResult> GetTripsByVehicle(int vehicleId)
     {
         try

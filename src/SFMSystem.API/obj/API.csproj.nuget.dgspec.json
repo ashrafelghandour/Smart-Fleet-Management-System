@@ -217,6 +217,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.0, )"
@@ -285,6 +289,9 @@
             "projectReferences": {
               "/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/FleetManagementSystem.Application.csproj": {
                 "projectPath": "/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Application/FleetManagementSystem.Application.csproj"
+              },
+              "/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/FleetManagementSystem.Domain.csproj": {
+                "projectPath": "/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Domain/FleetManagementSystem.Domain.csproj"
               },
               "/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Infrastructure/FleetManagementSystem.Infrastructure.csproj": {
                 "projectPath": "/Users/william 1/Desktop/SFMSystem/src/FleetManagementSystem.Infrastructure/FleetManagementSystem.Infrastructure.csproj"

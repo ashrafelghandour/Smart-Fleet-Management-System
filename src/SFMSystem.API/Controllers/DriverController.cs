@@ -14,7 +14,7 @@ namespace SFMSystem.API.Controllers;
 public class DriverController : BaseApiController{
 
     [HttpGet]   
-    [Authorize(Roles = Roles.Admin )]
+    [Authorize( Policy = Permissions.DriversView)]
     public async Task<IActionResult> GetAll()
     {
         try
@@ -31,6 +31,7 @@ public class DriverController : BaseApiController{
 
     }
     [HttpGet("Available")]
+    [Authorize( Policy = Permissions.DriversView)]
      public async Task<IActionResult> GetAvailableDriver()
     {
         try
@@ -48,6 +49,7 @@ public class DriverController : BaseApiController{
 
 
     [HttpGet("ById{id}")]   
+    [Authorize( Policy = Permissions.DriversView)]
     public async Task<IActionResult> GetAll(int id)
     {
         try
@@ -64,6 +66,7 @@ public class DriverController : BaseApiController{
     }
 
     [HttpPost]
+    [Authorize( Policy = Permissions.DriversCreate)]
     public async Task<IActionResult> CreateDriver([FromBody] CreateDriverCommand request )
     {
         try
@@ -78,7 +81,8 @@ public class DriverController : BaseApiController{
         
          
     }
-  [HttpPut("{id}/status")]
+    [HttpPut("{id}/status")]
+    [Authorize( Policy = Permissions.DriversManageStatus)]
     public async Task<IActionResult> UpdateDriverStatus(int id, [FromBody] UpdateDriverStatusRequest request)
     {
         try
@@ -98,6 +102,7 @@ public class DriverController : BaseApiController{
     }
 
     [HttpDelete]
+    [Authorize( Policy = Permissions.DriversDelete)]
    public async Task<IActionResult> DeleteDriver([FromBody] DeleteDriverCommand request )
     {
         try

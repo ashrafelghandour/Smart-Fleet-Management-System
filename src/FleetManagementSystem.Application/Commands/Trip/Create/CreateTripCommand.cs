@@ -6,8 +6,8 @@ namespace FleetManagementSystem.Application.Commands.Trip.Create;
 public record CreateTripCommand(
  int DriverId,
  int VehicleId,
- string StartLocation,
- string EndLocation,
+ string? StartLocation ,
+ string? EndLocation,
  double Distance,
  double CargoWeight
 ) 

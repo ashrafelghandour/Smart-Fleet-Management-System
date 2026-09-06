@@ -1,5 +1,6 @@
 using FleetManagementSystem.Infrastructure.Data;
 using FleetManagementSystem.Application.Interface;
+using FleetManagementSystem.Domain.Common;
 
 namespace FleetManagementSystem.Infrastructure.UnitOfWork;
 
@@ -47,4 +48,9 @@ public class UnitOfWork : IUnitOfWork
         }
         _disposed = true;
     }
+
+ public IGenericRepository<T> Repository<T>() where T : BaseEntity
+ {
+  throw new NotImplementedException();
+ }
 }

@@ -1,6 +1,7 @@
 
 using FleetManagementSystem.Application.Commands.FuelRecord.Create;
 using FleetManagementSystem.Application.Queries.FuelRecord.GetByVehicleId;
+using FleetManagementSystem.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,8 +11,9 @@ namespace SFMSystem.API.Controllers;
 [Authorize]
 public class FuelRecordController : BaseApiController
 {
-    
+
     [HttpPost]
+    [Authorize(Roles = Roles.Admin + "," + Roles.Driver)]
     public async Task<IActionResult> AddFuelRecord([FromBody] AddFuelRecordCommand command)
     {
         try
@@ -26,6 +28,7 @@ public class FuelRecordController : BaseApiController
     }
 
     [HttpGet("vehicle/{vehicleId}")]
+    [Authorize(Roles = Roles.Admin + "," + Roles.Driver)]
     public async Task<IActionResult> GetFuelRecordsByVehicle(int vehicleId)
     {
         try

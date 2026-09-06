@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../FleetManagementSystem.Application/FleetManagementSystem.Application.csproj" />
+    <ProjectReference Include="../FleetManagementSystem.Domain/FleetManagementSystem.Domain.csproj" />
     <ProjectReference Include="../FleetManagementSystem.Infrastructure/FleetManagementSystem.Infrastructure.csproj" />
   </ItemGroup>
 
