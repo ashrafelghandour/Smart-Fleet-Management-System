@@ -12,6 +12,9 @@
     <PackageReference Include="Bogus" Version="35.6.5" />
     <PackageReference Include="coverlet.collector" Version="6.0.4" />
     <PackageReference Include="FluentAssertions" Version="8.10.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -25,7 +28,6 @@
     <ProjectReference Include="../../src/FleetManagementSystem.Application/FleetManagementSystem.Application.csproj" />
     <ProjectReference Include="../../src/FleetManagementSystem.Domain/FleetManagementSystem.Domain.csproj" />
     <ProjectReference Include="../../src/FleetManagementSystem.Infrastructure/FleetManagementSystem.Infrastructure.csproj" />
-    <ProjectReference Include="../../src/SFMSystem.API/API.csproj" />
   </ItemGroup>
 
   <ItemGroup>

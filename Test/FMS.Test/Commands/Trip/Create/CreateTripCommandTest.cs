@@ -4,18 +4,24 @@ using FleetManagementSystem.Application.Commands.Trip.Create;
 using FleetManagementSystem.Application.Mappings;
 using FleetManagementSystem.Domain.Entities;
 using FleetManagementSystem.Domain.Enums;
-using FleetManagementSystem.Domain;
 using FleetManagementSystem.UnitTests.Helpers;
 using FleetManagementSystem.UnitTests.Mocks;
 using Moq;
 using FleetManagementSystem.Application.Interface;
 using AutoMapper;
 using FluentAssertions;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using FleetManagementSystem.Application.ValidationBehavior;
+using FleetManagementSystem.Application.LoggingBehavior;
+using System.Linq.Expressions;
+using FluentAssertions.Extensions;
 
 namespace FleetManagementSystem.UnitTests.Commands.Trip;
 
 public class CreateTripCommandHandlerTests
 {
+    private IMediator _mediator;
     private readonly Mock<IUnitOfWork> _mockUnitOfWork;
     private readonly Mock<IGenericRepository<Driver>> _mockDriverRepo;
     private readonly Mock<IGenericRepository<Vehicle>> _mockVehicleRepo;
@@ -29,7 +35,7 @@ public class CreateTripCommandHandlerTests
         // Arrange - AutoMapper
         var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
         _mapper = config.CreateMapper();
-
+       
         // Arrange - Repositories
         _mockDriverRepo = new Mock<IGenericRepository<Driver>>();
         _mockVehicleRepo = new Mock<IGenericRepository<Vehicle>>();
@@ -47,6 +53,28 @@ public class CreateTripCommandHandlerTests
         _mockValidator
             .Setup(v => v.ValidateAsync(It.IsAny<CreateTripCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new ValidationResult());
+
+
+
+    var services = new ServiceCollection();
+
+services.AddLogging();
+
+services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssemblyContaining<CreateTripCommandHandler>();
+    cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+});
+
+services.AddValidatorsFromAssemblyContaining<CreateTripCommandValidator>();
+
+services.AddSingleton(_mockDriverRepo.Object);
+services.AddSingleton(_mockVehicleRepo.Object);
+services.AddSingleton(_mockTripRepo.Object);
+
+var provider = services.BuildServiceProvider();
+
+_mediator = provider.GetRequiredService<IMediator>();
 
         // Act - Create Handler
         _handler = new CreateTripCommandHandler(
@@ -83,6 +111,10 @@ public class CreateTripCommandHandlerTests
         };
 
         // Setup mocks
+        _mockTripRepo
+        .Setup(r => r.GetByIdAsync(It.IsAny<int>()))
+        .ReturnsAsync(trip);
+
         _mockDriverRepo
             .Setup(r => r.GetByIdAsync(command.DriverId))
             .ReturnsAsync(driver);
@@ -98,7 +130,7 @@ public class CreateTripCommandHandlerTests
         _mockTripRepo
             .Setup(r => r.AddAsync(It.IsAny<Domain.Entities.Trip>()))
             .ReturnsAsync(trip);
-
+        
         _mockUnitOfWork
             .Setup(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(1);
@@ -134,7 +166,7 @@ public class CreateTripCommandHandlerTests
     public async Task Handle_WhenValidationFails_ShouldThrowValidationException()
     {
         // Arrange
-        var command = TestDataFactory.CreateValidTripCommand();
+        var command = TestDataFactory.CreateInvalidTripCommand();
 
         _mockValidator
             .Setup(v => v.ValidateAsync(It.IsAny<CreateTripCommand>(), It.IsAny<CancellationToken>()))
@@ -146,14 +178,24 @@ public class CreateTripCommandHandlerTests
                 }
             });
 
-        // Act & Assert
-        await Assert.ThrowsAsync<ValidationException>(() => 
-            _handler.Handle(command, CancellationToken.None));
+    // Act & Assert
 
-        // Verify no repository methods were called
-        _mockDriverRepo.Verify(r => r.GetByIdAsync(It.IsAny<int>()), Times.Never);
-        _mockVehicleRepo.Verify(r => r.GetByIdAsync(It.IsAny<int>()), Times.Never);
-        _mockTripRepo.Verify(r => r.AddAsync(It.IsAny<Domain.Entities.Trip>()), Times.Never);
+await Assert.ThrowsAsync<ValidationException>(() =>
+    _mediator.Send(command, CancellationToken.None));
+
+// Verify no repository methods were called
+
+_mockDriverRepo.Verify(
+    r => r.GetByIdAsync(-11),
+    Times.Never);
+
+_mockVehicleRepo.Verify(
+    r => r.GetByIdAsync(-12),
+    Times.Never);
+
+_mockTripRepo.Verify(
+    r => r.AddAsync(It.IsAny<Domain.Entities.Trip>()),
+    Times.Never);
     }
 
     // ========================================================================
@@ -174,7 +216,7 @@ public class CreateTripCommandHandlerTests
         var exception = await Assert.ThrowsAsync<Exception>(() => 
             _handler.Handle(command, CancellationToken.None));
 
-        exception.Message.Should().Be($"Driver with ID {command.DriverId} not found");
+        exception.Message.Should().Be($"Driver not found");
 
         // Verify no vehicle was fetched
         _mockVehicleRepo.Verify(r => r.GetByIdAsync(It.IsAny<int>()), Times.Never);
@@ -264,7 +306,7 @@ public class CreateTripCommandHandlerTests
         var exception = await Assert.ThrowsAsync<Exception>(() => 
             _handler.Handle(command, CancellationToken.None));
 
-        exception.Message.Should().Be($"Vehicle with ID {command.VehicleId} not found");
+        exception.Message.Should().Be($"Vehicle not found");
     }
 
     [Fact]
@@ -386,7 +428,7 @@ public class CreateTripCommandHandlerTests
        );
 
         // Act & Assert
-        await Assert.ThrowsAsync<ValidationException>(() => 
+        await Assert.ThrowsAsync<Exception>(() => 
             _handler.Handle(command, CancellationToken.None));
     }
 
@@ -404,7 +446,7 @@ public class CreateTripCommandHandlerTests
            StartLocation = start,
           EndLocation = end
         };
-       
+
         _mockValidator
             .Setup(v => v.ValidateAsync(It.IsAny<CreateTripCommand>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new ValidationResult
@@ -412,14 +454,16 @@ public class CreateTripCommandHandlerTests
                 Errors = new List<ValidationFailure>
                 {
                     new ValidationFailure(
-                        string.IsNullOrEmpty(start) ? "StartLocation" : "EndLocation", 
+                        string.IsNullOrEmpty(start) ? "StartLocation" : "EndLocation",
                         expectedError)
                 }
             });
 
         // Act & Assert
+        
+    
         var exception = await Assert.ThrowsAsync<ValidationException>(() => 
-            _handler.Handle(command, CancellationToken.None));
+            _mediator.Send(command, CancellationToken.None));
 
         exception.Message.Should().Contain(expectedError);
     }

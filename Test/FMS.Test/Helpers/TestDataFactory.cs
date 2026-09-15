@@ -157,8 +157,8 @@ public static class TestDataFactory
     {
         return new CreateTripCommand
         (
-            0,
-             0,
+            -11,
+             -12,
              "",
              "",
              -100,

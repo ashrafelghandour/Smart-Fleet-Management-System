@@ -14,8 +14,7 @@ public class CompleteTripCommandHandler(
         IMapper _mapper
 ) : IRequestHandler<CompleteTripCommand, TripResponse>
 {
-    
-    public async Task<TripResponse> Handle(CompleteTripCommand request, CancellationToken cancellationToken)
+ public async Task<TripResponse> Handle(CompleteTripCommand request, CancellationToken cancellationToken)
     {
         var trip = await _tripRepository.GetByIdAsync(request.id);
         if (trip == null)

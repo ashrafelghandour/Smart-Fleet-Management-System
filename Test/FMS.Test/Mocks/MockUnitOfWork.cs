@@ -39,4 +39,13 @@ public static class MockUnitOfWork
             .Returns(mockRepo.Object);
         return mock;
     }
+
+    public static Mock<IUnitOfWork> SetupTripExpenseRepository(
+        this Mock<IUnitOfWork> mock,
+        Mock<IGenericRepository<TripExpense>> mockRepo)
+    {
+        mock.Setup(u => u.Repository<TripExpense>())
+            .Returns(mockRepo.Object);
+        return mock;
+    }
 }
