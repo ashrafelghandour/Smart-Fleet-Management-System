@@ -48,7 +48,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         
 
         entity.IsDeleted = true;  
-          Update(entity);
+      await Update(entity);
     }
 
     public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
