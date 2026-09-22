@@ -29,6 +29,12 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
+      - name: Inspect MSBuild items
+        run: |
+          dotnet msbuild src/SFMSystem.API/API.csproj -getItem:Compile
+          dotnet msbuild src/SFMSystem.API/API.csproj -getItem:Content
+          dotnet msbuild src/SFMSystem.API/API.csproj -getItem:EmbeddedResource
+
       - name: Build
         run: dotnet build src/SFMSystem.API/API.csproj --no-restore
 
