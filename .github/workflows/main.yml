@@ -31,9 +31,14 @@ jobs:
 
       - name: Inspect MSBuild items
         run: |
-          dotnet msbuild src/SFMSystem.API/API.csproj -getItem:Compile
-          dotnet msbuild src/SFMSystem.API/API.csproj -getItem:Content
-          dotnet msbuild src/SFMSystem.API/API.csproj -getItem:EmbeddedResource
+          echo "=== COMPILE ==="
+          dotnet msbuild src/SFMSystem.API/API.csproj -getItem:Compile | grep -F '**/*.cs' || true
+
+          echo "=== CONTENT ==="
+          dotnet msbuild src/SFMSystem.API/API.csproj -getItem:Content | grep -E '\*\*/\*\.razor|\*\*/\*\.cshtml' || true
+
+          echo "=== EMBEDDED RESOURCE ==="
+          dotnet msbuild src/SFMSystem.API/API.csproj -getItem:EmbeddedResource | grep -F '**/*.resx' || true
 
       - name: Build
         run: dotnet build src/SFMSystem.API/API.csproj --no-restore
