@@ -28,11 +28,9 @@ jobs:
         run: |
           find . -type d \( -name bin -o -name obj \) -prune -exec rm -rf {} +
 
-      - name: Restore dependencies
-        run: dotnet restore src/SFMSystem.API/API.csproj
 
       - name: Build
-        run: dotnet build src/SFMSystem.API/API.csproj --no-restore
+        run: dotnet build src/SFMSystem.API/API.csproj 
 
       - name: Test
         run: dotnet test
