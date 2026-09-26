@@ -26,7 +26,8 @@ jobs:
       - name: Clean generated files
         run: |
           find . -type d \( -name bin -o -name obj \) -prune -exec rm -rf {} +
-
+      - name: Restore Dependance 
+        run: dotnet restore  
 
       - name: Build
         run: dotnet build src/SFMSystem.API/API.csproj 
