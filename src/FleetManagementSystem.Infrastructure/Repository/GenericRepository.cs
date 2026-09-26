@@ -27,7 +27,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return await _dbSet.ToListAsync();
     }
 
-    public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+    public async Task<IEnumerable<T>> FindAsync(
+        Expression<Func<T, bool>> predicate)
     {
         return await _dbSet.Where(predicate).ToListAsync();
     }
@@ -37,23 +38,22 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         await _dbSet.AddAsync(entity);
         return entity;
     }
-    public async Task<T>Update(T entity)
+
+    public Task<T> Update(T entity)
     {
-        await  _dbSet.Update(entity);
-        return   entity;
+        _dbSet.Update(entity);
+        return Task.FromResult(entity);
     }
 
-    public  void Delete(T entity)
+    public void Delete(T entity)
     {
-        
-
-        entity.IsDeleted = true;  
-      await Update(entity);
+        entity.IsDeleted = true;
+        _dbSet.Update(entity);
     }
 
-    public async Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate)
+    public async Task<bool> ExistsAsync(
+        Expression<Func<T, bool>> predicate)
     {
         return await _dbSet.AnyAsync(predicate);
     }
-
 }
